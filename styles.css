@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.carousel img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#drop-area {
+  width: 500px;
+  height: 300px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+#img-view {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 2px dashed #bbb5ff;
+  background: #f7f8ff;
+  background-position: center;
+  background-size: cover;
+}
+
+#img-view img {
+  width: 100px;
+  margin: 25px 0px;
+}
+
+#img-view p {
+  margin-bottom: 25px;
+}
+
+@keyframes slide {
+  0%,
+  50% {
+    transform: translateX(0);
+  }
+  50.01%,
+  100% {
+    transform: translateX(-100%);
+  }
+}
