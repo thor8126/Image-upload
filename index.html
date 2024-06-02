@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yo,its my new project!</title>
+    <title>Yo, it's my new project!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,6 +31,25 @@
           </p>
         </div>
       </label>
+
+      <div id="upload-preview" class="upload-preview">
+        <img id="preview-image" src="../sample.png" alt="" />
+        <input
+          type="text"
+          id="image-description"
+          placeholder="Enter description"
+        />
+        <div class="actions">
+          <button id="add-todo">
+            <i class="fa fa-check" style="color: green"></i>
+          </button>
+          <button id="cancel-upload">
+            <i class="fa fa-times" style="color: red"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="todo-list" class="todo-list"></div>
     </div>
     <script src="script.js"></script>
   </body>
