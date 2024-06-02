@@ -52,6 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setInterval(() => {
     currentIndex = (currentIndex + 1) % carouselImages.length;
-    carousel.style.transform = `translateX(-${currentIndex * 50}%)`; // Adjusted for smoother transition
-  }, 5000); // Change image every 5 seconds
+    carousel.style.transform = `translateX(-${currentIndex * 50}%)`;
+  }, 5000);
 });
