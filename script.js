@@ -1,165 +1,153 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const dropArea = document.getElementById("drop-area");
-  const inputFile = document.getElementById("input-file");
-  const uploadPreview = document.getElementById("upload-preview");
-  const previewImage = document.getElementById("preview-image");
-  const imageDescription = document.getElementById("image-description");
-  const addTodoBtn = document.getElementById("add-todo");
-  const cancelUploadBtn = document.getElementById("cancel-upload");
-  const todoList = document.getElementById("todo-list");
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("fileInput");
+  const fileList = document.getElementById("fileList");
+  const MAX_IMAGES = 5;
+  const maxSize = 1024 * 1024; // 1 MB in bytes
 
-  // Event listeners
-  inputFile.addEventListener("change", handleFileUpload);
-  dropArea.addEventListener("dragover", handleDragOver);
-  dropArea.addEventListener("drop", handleDrop);
-  addTodoBtn.addEventListener("click", addTodo);
-  cancelUploadBtn.addEventListener("click", cancelUpload);
-
-  // Load todo list from local storage on page load
-  loadTodoList();
-
-  // Handle file upload
-  function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      previewImage.src = imageUrl;
-      uploadPreview.style.visibility = "visible";
-      dropArea.style.borderBottomLeftRadius = "0";
-      dropArea.style.borderBottomRightRadius = "0";
-    }
-  }
-
-  // Handle drag over
-  function handleDragOver(event) {
+  // Write the code of all the dropzone functionality here
+  dropzone.addEventListener("dragover", (event) => {
     event.preventDefault();
-  }
+  });
 
-  // Handle drop
-  function handleDrop(event) {
+  dropzone.addEventListener("drop", (event) => {
     event.preventDefault();
-    inputFile.files = event.dataTransfer.files;
-    handleFileUpload({ target: inputFile });
+    fileInput.files = event.dataTransfer.files;
+    console.log(fileInput.files);
+    uploadImage();
+  });
+
+  // Fetch image from input
+  fileInput.addEventListener("change", uploadImage);
+
+  function uploadImage() {
+    const imageLink = fileInput.files;
+    console.log(imageLink);
+    displayFile(imageLink[0]);
   }
 
-  // Add todo item
-  function addTodo() {
-    const description = imageDescription.value;
-    if (!description) {
-      alert("Please enter a description.");
+  function displayFile(file) {
+    // Checking the condition, only 5 images allowed
+    const list = document.querySelectorAll(".file-name");
+    if (list.length > MAX_IMAGES - 1) {
+      window.alert(
+        `Maximum images allowed is 5. "${file.name}" won't be added.`
+      );
       return;
     }
 
-    const todoItem = document.createElement("div");
-    todoItem.classList.add("todo-item");
-
-    const imgElement = document.createElement("img");
-    imgElement.src = previewImage.src;
-    todoItem.appendChild(imgElement);
-
-    const descElement = document.createElement("div");
-    descElement.classList.add("description");
-    descElement.innerText = description;
-    todoItem.appendChild(descElement);
-
-    const actionsElement = document.createElement("div");
-    actionsElement.classList.add("actions");
-
-    const removeBtn = document.createElement("button");
-    removeBtn.innerHTML = '<i class="fa fa-times" style="color: red"></i>';
-    removeBtn.addEventListener("click", () => {
-      todoList.removeChild(todoItem);
-      updateLocalStorage();
-    });
-    actionsElement.appendChild(removeBtn);
-
-    todoItem.appendChild(actionsElement);
-    todoList.appendChild(todoItem);
-
-    // Update local storage
-    updateLocalStorage();
-
-    // Reset upload preview
-    resetUploadPreview();
-  }
-
-  // Cancel upload
-  function cancelUpload() {
-    resetUploadPreview();
-  }
-
-  // Reset upload preview
-  function resetUploadPreview() {
-    previewImage.src = "";
-    imageDescription.value = "";
-    uploadPreview.style.visibility = "hidden";
-  }
-
-  // Load todo list from local storage
-  function loadTodoList() {
-    const storedTodoList = JSON.parse(localStorage.getItem("todoList"));
-    if (storedTodoList) {
-      uploadPreview.style.borderBottomLeftRadius = "0";
-      uploadPreview.style.borderBottomRightRadius = "0";
-      storedTodoList.forEach((todo) => {
-        const todoItem = document.createElement("div");
-        todoItem.classList.add("todo-item");
-
-        const imgElement = document.createElement("img");
-        imgElement.src = todo.imageSrc;
-        todoItem.appendChild(imgElement);
-
-        const descElement = document.createElement("div");
-        descElement.classList.add("description");
-        descElement.innerText = todo.description;
-        todoItem.appendChild(descElement);
-
-        const actionsElement = document.createElement("div");
-        actionsElement.classList.add("actions");
-
-        const removeBtn = document.createElement("button");
-        removeBtn.innerHTML = '<i class="fa fa-times" style="color: red"></i>';
-        removeBtn.addEventListener("click", () => {
-          todoList.removeChild(todoItem);
-          updateLocalStorage();
-        });
-        actionsElement.appendChild(removeBtn);
-
-        todoItem.appendChild(actionsElement);
-        todoList.appendChild(todoItem);
-      });
+    // Checking the condition, only images less than 1MB allowed
+    if (file.size > maxSize) {
+      window.alert("Size of image should be less than 1MB");
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const div = document.createElement("div");
+      div.className = "file-name";
+
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.alt = file.name;
+      img.className = "thumbnail";
+
+      // Create input textArea
+      const textArea = document.createElement("textarea");
+      textArea.placeholder = "Add a description...";
+
+      // Create icon for checking
+      const check = document.createElement("i");
+      check.classList.add("fa-solid", "fa-check", "des-added");
+      check.addEventListener("click", () => {
+        textArea.disabled = true;
+        window.alert("Description added.");
+        // Save image data to localStorage
+        const imageData = {
+          src: e.target.result,
+          description: textArea.value,
+        };
+        saveToLocalStorage(imageData);
+      });
+
+      // Create icon for deleting
+      const del = document.createElement("i");
+      del.classList.add("fa-solid", "fa-trash");
+      del.addEventListener("click", () => {
+        div.remove();
+        console.log("removed");
+      });
+
+      div.appendChild(img);
+      div.appendChild(textArea);
+      div.appendChild(check);
+      div.appendChild(del);
+      fileList.appendChild(div);
+    };
+    reader.readAsDataURL(file);
   }
 
-  // Update local storage
-  function updateLocalStorage() {
-    const todoItems = todoList.querySelectorAll(".todo-item");
-    const todoListData = [];
-    todoItems.forEach((todoItem) => {
-      const imgSrc = todoItem.querySelector("img").src;
-      const description = todoItem.querySelector(".description").innerText;
-      todoListData.push({ imageSrc: imgSrc, description: description });
+  // Function to save data to localStorage
+  function saveToLocalStorage(imageData) {
+    const storedImagesData = JSON.parse(
+      localStorage.getItem("storedImagesData") || "[]"
+    );
+    storedImagesData.push(imageData);
+    localStorage.setItem("storedImagesData", JSON.stringify(storedImagesData));
+  }
+
+  // Load data from localStorage on page load
+  function loadFromLocalStorage() {
+    const storedImagesData = JSON.parse(
+      localStorage.getItem("storedImagesData") || "[]"
+    );
+    console.log("Loaded from localStorage:", storedImagesData);
+    storedImagesData.forEach((data) => {
+      const div = document.createElement("div");
+      div.className = "file-name";
+
+      const img = document.createElement("img");
+      img.src = data.src;
+      img.alt = data.name;
+      img.className = "thumbnail";
+
+      // Create input textArea
+      const textArea = document.createElement("textarea");
+      textArea.placeholder = "Add a description...";
+      textArea.textContent = data.description;
+      textArea.disabled = true;
+
+      // Create icon for checking
+      const check = document.createElement("i");
+      check.classList.add("fa-solid", "fa-check", "des-added");
+
+      // Create icon for deleting
+      const del = document.createElement("i");
+      del.classList.add("fa-solid", "fa-trash");
+
+      del.addEventListener("click", () => {
+        div.remove();
+        // Find the index of the item to be deleted
+        const index = storedImagesData.findIndex(
+          (item) => item.src === data.src
+        );
+
+        // If the item exists, remove it from the array and update localStorage
+        if (index !== -1) {
+          storedImagesData.splice(index, 1);
+          localStorage.setItem(
+            "storedImagesData",
+            JSON.stringify(storedImagesData)
+          );
+          console.log("Item removed from localStorage");
+        } else {
+          console.log("Item not found in localStorage");
+        }
+      });
+
+      div.append(img, textArea, check, del);
+      fileList.appendChild(div);
     });
-    localStorage.setItem("todoList", JSON.stringify(todoListData));
   }
-
-  // Initialize carousel
-  const carouselImages = ["../carousel1.jpg", "../carousel2.jpg"];
-  const carousel = document.createElement("div");
-  carousel.classList.add("carousel");
-
-  carouselImages.forEach((src) => {
-    const img = document.createElement("img");
-    img.src = src;
-    carousel.appendChild(img);
-  });
-
-  document.querySelector(".hero").appendChild(carousel);
-
-  let currentIndex = 0;
-
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % carouselImages.length;
-    carousel.style.transform = `translateX(-${currentIndex * 50}%)`;
-  }, 5000);
+  loadFromLocalStorage(); // Load data from localStorage on page load
 });

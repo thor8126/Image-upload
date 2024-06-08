@@ -3,54 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yo, it's my new project!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="styles.css" />
+    <title>Image To Do List</title>
   </head>
-  <body>
-    <div class="hero">
-      <label for="input-file" id="drop-area">
-        <input type="file" accept="image/*" id="input-file" hidden />
-        <div id="img-view">
-          <img src="../upload-icon.png" alt="upload-icon" />
-          <p>
-            Drag and drop or click here <br />
-            to upload image
-          </p>
-        </div>
-      </label>
 
-      <div id="upload-preview" class="upload-preview">
-        <img id="preview-image" src="../sample.png" alt="" />
-        <input
-          type="text"
-          id="image-description"
-          placeholder="Enter description"
-        />
-        <div class="actions">
-          <button id="add-todo">
-            <i class="fa fa-check" style="color: green"></i>
-          </button>
-          <button id="cancel-upload">
-            <i class="fa fa-times" style="color: red"></i>
-          </button>
+  <body>
+    <div>
+      <div class="carousel">
+        <div class="carousel-items">
+          <!-- Define you carousel here -->
         </div>
       </div>
 
-      <div id="todo-list" class="todo-list"></div>
+      <div class="app-container">
+        <!-- Define your rest of the things of the Image TODO List app here -->
+        <div class="inner-app-container">
+          <h2 style="margin-bottom: 10px">Upload Your Image</h2>
+          <label for="fileInput" class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <div class="icon-container">
+              <i class="fa-solid fa-cloud-arrow-up fa-8x"></i>
+              <p>
+                Drag & Drop or
+                <span style="text-decoration: underline; color: red"
+                  >Click to Browse</span
+                >
+              </p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="file-list" id="fileList">
+        <!-- Create the space here where your uploaded image will be visible -->
+      </div>
     </div>
+
+    <script
+      src="https://kit.fontawesome.com/9a91bf7896.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>

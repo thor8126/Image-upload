@@ -1,175 +1,97 @@
+/* Write your desired css here */
+/* body{
+    height: 100vh;
+    width: 100vw;
+    background-image: url("./carousel1.jpg");
+    background-size: cover;
+    background-position: center;
+} */
+
 * {
+  font-family: "Lato", sans-serif;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  padding: 0%;
+  /* box-sizing: border-box; */
 }
 
-.hero {
-  width: 100%;
-  height: 100vh;
+.app-container {
+  height: 50ch;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  overflow: hidden;
 }
 
-.carousel {
-  position: absolute;
-  width: 200%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  transition: transform 1s ease-in-out;
-}
-
-.carousel img {
-  width: 50%;
-  height: 100%;
-  object-fit: cover;
-}
-
-#drop-area {
-  padding: 30px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  width: 500px;
+.inner-app-container {
   height: 300px;
-  background: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-  padding-bottom: 20px;
-}
-
-#img-view {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  border: 2px dashed #bbb5ff;
-  background: #f7f8ff;
-  background-position: center;
-  background-size: cover;
-}
-
-#img-view img {
-  width: 100px;
-  margin: 25px 0px;
-}
-
-#img-view p {
-  margin-bottom: 25px;
-}
-
-@keyframes slide {
-  0%,
-  50% {
-    transform: translateX(0);
-  }
-  50.01%,
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.upload-preview {
-  visibility: hidden;
   width: 500px;
-  padding-bottom: 30px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  background: rgba(255, 255, 255, 0.8);
   display: flex;
-  z-index: 2;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-evenly;
+  border: 1px solid #f3f4f6;
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.upload-preview img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.upload-preview input {
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.actions button {
-  margin-left: 5px;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  border: none;
-  background: #eee;
-  color: #333;
-  font-size: 16px;
+#dropzone {
+  height: 200px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  border: 2px dashed gray;
+  border-radius: 15px;
   cursor: pointer;
 }
 
-.todo-list {
-  overflow-y: scroll;
-  width: 500px;
-  padding-bottom: 20px;
+.icon-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1;
+  justify-content: center;
+  gap: 15px;
 }
 
-.todo-list::-webkit-scrollbar {
-  display: none;
+.icon-container i {
+  color: green;
 }
 
-.todo-item {
-  background: rgba(255, 255, 255, 0.8);
-  width: 100%;
+#fileList {
+  margin-top: -40px;
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 20px;
+  /* border: 1px solid black; */
 }
 
-.todo-item img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.todo-item .description {
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.todo-item .actions {
+.file-name {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  /* border: 1px solid black; */
 }
 
-.todo-item .actions button {
-  margin-left: 5px;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  border: none;
-  background: #eee;
-  color: #333;
-  font-size: 16px;
+.file-name i {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
   cursor: pointer;
 }
+
+textarea {
+  height: 6ch;
+  width: 350px;
+  border-radius: 5px;
+}
+
+.thumbnail {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+/* #fileList img{
+  height: 500px;
+  filter: drop-shadow(1px 1px 20px yellow);
+} */
